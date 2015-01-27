@@ -47,7 +47,7 @@ public class FetchTitle implements Runnable{
 						System.out.println(doc.title());
 						pageTitles.add(doc.title());
 					}
-				}catch(UnknownHostException e){
+				}/*catch(UnknownHostException e){
 					e.printStackTrace();
 					UHOST = true;
 					try {
@@ -57,7 +57,7 @@ public class FetchTitle implements Runnable{
 						e1.printStackTrace();
 					}
 					
-				}catch (IOException e) {
+				}*/catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
