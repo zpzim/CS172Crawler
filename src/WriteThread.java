@@ -10,8 +10,29 @@ public class WriteThread implements Runnable {
 	public static ArrayBlockingQueue<String> q = new ArrayBlockingQueue<String>(50, true);
 	private static int fileSize = 0;
 	private static int count = INITCOUNT;
-	private static File file = new File("D:\\TweetData\\TweetData"+((Integer)count).toString() + ".txt");
+	private String path;
+	private static File file;
 	private static PrintWriter writer;
+	public WriteThread(String p)
+	{
+		path = p;
+		if(!path.endsWith("\\")) {
+			path.concat("\\");
+		}
+		
+		count = 0;
+		file = new File(path + "TweetData"+((Integer)count).toString() + ".txt");
+	}
+	public WriteThread(String p, int initialCount)
+	{
+		path = p;
+		if(!path.endsWith("\\")) {
+			path += "\\";
+		}
+		System.out.println(path);
+		count = initialCount;
+		file = new File(path + "TweetData"+((Integer)count).toString() + ".txt");
+	}
 	public void run() {
 		
 		try {
@@ -44,7 +65,7 @@ public class WriteThread implements Runnable {
 					fileSize = 0;
 					writer.close();
 					count++;
-					file = new File("D:\\TweetData\\TweetData"+((Integer)count).toString() + ".txt");
+					file = new File(path + "TweetData"+((Integer)count).toString() + ".txt");
 					try {
 						writer = new PrintWriter(file, "UTF-8");
 					} catch (FileNotFoundException e) {

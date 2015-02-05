@@ -22,9 +22,25 @@ public final class Stream {
 	//public static PrintWriter writer;
 	final static int __COUNT = 0;
 	static int numThreads = 0;
+	static private String path;
+	static private int initCount;
 	//public static File file = null; 
 	public static void main(String[] args) throws TwitterException {
-    	
+		if(args.length == 0 || args.length > 2)
+		{
+			System.err.println("Correct Usage: Stream.jar path/to/output/directory/ [initial file number]");
+			return;
+		}
+		if(args.length == 1)
+		{
+			path = args[0];
+			initCount = 0;
+		}
+		else if(args.length == 2)
+		{
+			path = args[0];
+			initCount = Integer.parseInt(args[1]);
+		}
     	//authenticate stream
 		//int counter = __COUNT;
     	ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -195,7 +211,8 @@ public final class Stream {
         };
         
         twitterStream.addListener(listener);
-        WriteThread writer = new WriteThread();
+        
+        WriteThread writer = new WriteThread(path, initCount);
        
         System.out.println("Start Sampling");
         double[][] loc = { {-160.1573700905,-11.5382811043},{-37.8477935791,57.3701052779} };
