@@ -22,16 +22,11 @@ public class FetchTitle implements Runnable{
 		private String url;
 		private JSONObject tweet;
 		private RandomAccessFile f;
-		//private int FileNo;
-		//private PrintWriter writer;
-		//private File file;//new File("D:\\TweetData\\TweetData"+((Integer)FileNo).toString() + ".txt");
 		ArrayList<String> pageTitles = new ArrayList<String>();
 		Document doc = null;
 		FetchTitle(String URL, JSONObject t) {
 			this.url = URL;
 			this.tweet = t;
-			//this.FileNo = fileno;
-			//this.writer = Writer;
 		}
 		public void run() {
 			Stream.numThreads++;
@@ -47,17 +42,9 @@ public class FetchTitle implements Runnable{
 						System.out.println(doc.title());
 						pageTitles.add(doc.title());
 					}
-				}/*catch(UnknownHostException e){
-					e.printStackTrace();
-					UHOST = true;
-					try {
-						Thread.sleep(10000);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+				}
 					
-				}*/catch (IOException e) {
+				catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -67,30 +54,13 @@ public class FetchTitle implements Runnable{
 			if(pageTitles.size() != 0){
 				tweet.put("PageTitles", pageTitles);
 			}
-			//PrintWriter writer = null;
-			//FileLock lock = null;
-			//FileChannel channel = null;
-			
-			//System.out.println(lock.toString());
-			//writer = new PrintWriter(file, "UTF-8");
 			try {
 				WriteThread.q.offer(tweet.toString(), 10, TimeUnit.SECONDS);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-				
-			
-			//if(lock != null){
-			//	lock.release();
-			//}
-			//f.close();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			//} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 		}
 		Stream.numThreads--;
 	}

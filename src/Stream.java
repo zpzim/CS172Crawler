@@ -28,7 +28,7 @@ public final class Stream {
 	public static void main(String[] args) throws TwitterException {
 		if(args.length == 0 || args.length > 2)
 		{
-			System.err.println("Correct Usage: Stream.jar path/to/output/directory/ [initial file number]");
+			System.err.println("Correct Usage: crawler.jar path/to/output/directory/ [initial file number]");
 			return;
 		}
 		if(args.length == 1)
@@ -82,20 +82,6 @@ public final class Stream {
             			//ArrayList<String> pageTitles = new ArrayList<String>();
             			URLEntity[] Urls = status.getURLEntities();
                 		for(int i = 0; i < Urls.length; ++i){
-                			//Document doc = null;
-                			
-                			//try {
-                				//System.out.println(Urls[i].getExpandedURL());
-                				//String title = TitleExtractor.getPageTitle(Urls[i].getExpandedURL());
-                				
-                				//System.out.println(title + '\n');
-                				//if(title != null){
-                				//	pageTitles.add(title);
-                			//	}	
-							//} catch (IOException e1) {
-								//// TODO Auto-generated catch block
-								//e1.printStackTrace();
-							//}
                 			
                 			FetchTitle ft = new FetchTitle(Urls[i].getExpandedURL(), tweet);
                 			
@@ -111,76 +97,17 @@ public final class Stream {
                 			System.out.println("Spawning Fetch Title Thread");
                 			FTThread.start();
                 		}
-                			/*try {
-                				Connection con = Jsoup.connect(Urls[i].getExpandedURL()).userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21").timeout(10000);
-								Connection.Response resp = con.execute();
-								if(resp.statusCode() == 200){
-									doc = con.get();
-									System.out.println(doc.title());
-									pageTitles.add(doc.title());
-									con.timeout(0);
-								}
-								
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-                		}
-                		try {
-                			if(pageTitles.size() != 0)
-							{
-                				tweet.put("Page Titles", pageTitles);
-							}
-						} catch (JSONException e) {
+            		}
+            		else{
+            			try {
+							WriteThread.q.put(tweetText);
+						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
             		}
-	            	//String username = status.getUser().getScreenName();
-	                //System.out.println("@" + username);
-	                //Date date = status.getCreatedAt();
-	                //System.out.println(date);
-	                //String profileLocation = user.getLocation();
-	                //System.out.println(profileLocation);
-	                //String content = status.getText();
-	                
-	                //URLEntity[] Urls = status.getURLEntities();
-            		//for(int i = 0; i < Urls.length; ++i){
-            		//	System.out.println(Urls[i].getExpandedURL());
-            		//}
-            		//System.out.println(content +"\n");
-            		//System.out.println(tweet.toString());
-            		*/
-                	//fileSize += tweet.toString().getBytes().length;
-            		//writer.println(tweet.toString());
-            		//if(fileSize > 10485760){ //
-            			/*fileSize = 0;
-            			writer.close();
-            			count++;
-            			file = new File("D:\\TweetData\\TweetData"+((Integer)count).toString() + ".txt");
-            			try {
-							writer = new PrintWriter(file, "UTF-8");
-						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (UnsupportedEncodingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}*/
-            			/*try {
-							writer = new PrintWriter("C:\\Users\\Zach\\Google Drive\\TweetData\\TweetData"+((Integer)count).toString() + ".txt", "UTF-8");
-						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (UnsupportedEncodingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}*/
-            		
-            		}
-                
-                }
-            	//}
+                	
+        		}
             }
             
 

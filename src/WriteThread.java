@@ -16,8 +16,15 @@ public class WriteThread implements Runnable {
 	public WriteThread(String p)
 	{
 		path = p;
-		if(!path.endsWith("\\")) {
-			path.concat("\\");
+		if(System.getProperty("os.name").startsWith("Windows")){
+				if(!path.endsWith("\\")) {
+				path.concat("\\");
+			}
+		}
+		else{
+			if(!path.endsWith("/")){
+				path.concat("/");
+			}
 		}
 		
 		count = 0;
